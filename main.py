@@ -4,11 +4,19 @@ from email.mime.text import MIMEText
 import schedule
 import time
 import urllib3
+import json
+
 
 #---------------------------------------------------------------
-sender_email_addr='web.alert.bot.ma@gmail.com'
-sender_email_pass='**********'
-receiver_email_addr='mohammadaminorojloo@outlook.com' 
+with open("secrets.json") as jsonFile:
+    jsonObject = json.load(jsonFile)
+    jsonFile.close()
+
+#---------------------------------------------------------------
+sender_email_addr=jsonObject['sender_email_addr']
+sender_email_pass=jsonObject['sender_email_pass']
+receiver_email_addr=jsonObject['receiver_email_addr'] 
+
 rechecktime=5 #secend
 emailmsg="THE WEBSITE IS FUCKEDUP"  #email msg
 emailtitle="WEB ALLERT [NO REPLY]"  #email title
@@ -38,7 +46,37 @@ def send_email(Subject,mail_content):
     print('Mail Sent')
 
 http = urllib3.PoolManager()
-print('the script is runn')
+#print('the script is runn')
+print('''
+
+                        _             
+                       (_)            
+ _ __ _   _ _ __  _ __  _ _ __   __ _ 
+| '__| | | | '_ \| '_ \| | '_ \ / _` |
+| |  | |_| | | | | | | | | | | | (_| |
+|_|   \__,_|_| |_|_| |_|_|_| |_|\__, |
+                                 __/ |
+                                |___/ 
+                        ,////,
+                        /// 6|
+                        //  _|
+                       _/_,-'
+                  _.-/'/   \   ,/;,
+               ,-' /'  \_   \ / _/
+               `\ /     _/\  ` /
+                 |     /,  `\_/
+                 |     \'
+ pb  /\_        /`      /\\
+   /' /_``--.__/\  `,. /  \\
+  |_/`  `-._     `\/  `\   `.
+            `-.__/'     `\   |
+                          `\  \\
+                            `\ \\
+                              \_\__
+                               \___)
+
+''')
+
 def check_web ():
     try:
         r = http.request('GET',WEBSITE_url , TimeoutError=5)
@@ -47,7 +85,7 @@ def check_web ():
             print("web is down")
             send_email(emailtitle,emailmsg)
         else:
-            print("web is up")
+            print("web is 0k")
     except :
         print("web is down")
         send_email(emailtitle,emailmsg)
